@@ -1,48 +1,36 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
+# Aplikasi Profil Minimalis (Tugas 3)
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+Aplikasi ini adalah halaman profil pengguna yang dibangun menggunakan **Jetpack Compose Multiplatform**. Desain difokuskan pada estetika minimalis, bersih, dan modern.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Fitur & Komponen Reusable
+Aplikasi ini menggunakan minimal 3 fungsi Composable yang dapat digunakan kembali:
+1.  **`ProfileHeader`**: Menampilkan foto profil circular (melingkar), nama lengkap, dan status/jurusan.
+2.  **`ProfileCard`**: Container minimalis untuk menampilkan biografi singkat pengguna.
+3.  **`InfoItem`**: Komponen baris informasi yang menggabungkan ikon Material Outlined dengan detail teks (Email, Telepon, Lokasi).
 
-### Build and Run Android Application
+## Screenshot Hasil Running
+<img src="pict/Screenshot_20260424_235805.png" width="300" alt="Screenshot Aplikasi Profil">
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+## Cara Menjalankan Aplikasi
+Aplikasi ini dapat dijalankan di berbagai platform (Android, Desktop, iOS).
 
-### Build and Run Desktop (JVM) Application
+### Android
+1.  Buka project di **Android Studio**.
+2.  Pastikan file `Flowers.jpg` sudah berada di folder `composeApp/src/commonMain/composeResources/drawable/`.
+3.  Pilih modul **`composeApp`** di toolbar atas.
+4.  Klik tombol **Run** (ikon play hijau) atau gunakan shortcut `Shift + F10`.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+### Desktop (JVM)
+Jalankan perintah berikut di terminal:
+```shell
+.\gradlew.bat :composeApp:run
+```
 
-### Build and Run iOS Application
-
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+## Struktur Proyek
+- `commonMain`: Berisi logika UI utama (App.kt) yang dibagikan ke semua platform.
+- `composeResources`: Tempat penyimpanan aset gambar (Flowers.jpg) dan ikon.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+**Nama:** Miftahul Khoiriyah  
+**Instansi:** Institut Teknologi Sumatera (ITERA)
