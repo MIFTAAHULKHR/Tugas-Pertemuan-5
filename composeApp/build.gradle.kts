@@ -43,8 +43,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             
-            // Add material icons
-            implementation(compose.components.resources)
+            // Navigation
+            implementation(libs.jetbrains.navigation.compose)
+            
+            // Material Icons
             implementation(compose.materialIconsExtended)
         }
         commonTest.dependencies {
