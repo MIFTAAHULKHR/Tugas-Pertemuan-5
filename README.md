@@ -1,70 +1,53 @@
-# Profile App - Kotlin Multiplatform (Tugas Pengembangan Aplikasi Mobile)
+# Notes & Profile App - Tugas 3 Pengembangan Aplikasi Mobile
 
-Aplikasi profil modern yang dikembangkan menggunakan **Compose Multiplatform** dengan penerapan arsitektur **MVVM (Model-View-ViewModel)**. Aplikasi ini mendukung fitur kustomisasi profil, tema adaptif (Dark/Light mode), dan pengelolaan state yang reaktif.
+Aplikasi manajemen catatan (Notes) yang dibangun menggunakan **Kotlin Multiplatform** dan **Jetpack Compose**. Aplikasi ini mengimplementasikan fitur navigasi modern, pola arsitektur MVVM, dan manajemen data yang reaktif.
 
-## Fitur Utama
-
-### 1. Tampilan Profil Minimalis
-Menampilkan informasi personal secara bersih menggunakan komponen Material 3:
-- Foto profil circular (melingkar).
-- Nama dan deskripsi pekerjaan/pendidikan.
-- Detail kontak (Email, Phone, Location) dengan ikon yang elegan.
-
-### 2. Fitur Edit Profile (State Hoisting)
-Pengguna dapat mengubah Nama dan Biografi melalui form interaktif:
-- Menggunakan `TextField` dengan *state hoisting* untuk menangani input sementara.
-- Tombol **Save** untuk memperbarui data ke sistem secara permanen.
-- Tombol **Cancel** untuk membatalkan perubahan tanpa memperbarui state utama.
-
-### 3. Dark Mode Toggle
-Implementasi tema dinamis yang memungkinkan pengguna beralih antara tema terang dan gelap secara instan melalui switch di pojok layar. Seluruh komponen UI akan menyesuaikan skema warna (background, surface, text) secara otomatis.
+## 📺 Demo Aplikasi
+Lihat demo aplikasi pada tautan berikut:
+**[YouTube Video Demo](https://youtu.be/zzMqYlv9trM)**
 
 ---
 
-## Implementasi MVVM Pattern
+## 🛠️ Penjelasan Implementasi Kode
 
-Aplikasi ini memisahkan logika bisnis dari tampilan menggunakan pola arsitektur MVVM:
+### 1. Notes List (`NotesScreen`)
+Layar utama yang menampilkan daftar seluruh catatan. Menggunakan `LazyColumn` untuk performa rendering yang optimal. Data diambil secara reaktif dari `NoteViewModel` menggunakan `StateFlow`.
+- **Fitur**: Menampilkan judul, cuplikan konten, dan status favorit (Heart Icon).
 
-### 1. Model (Data Class / UI State)
-Terletak di `ProfileUiState`, mendefinisikan seluruh status data yang dibutuhkan oleh UI dalam satu objek tunggal (Single Source of Truth).
-```kotlin
-data class ProfileUiState(
-    val name: String,
-    val bio: String,
-    val isDarkMode: Boolean,
-    val isEditing: Boolean,
-    // ... detail lainnya
-)
-```
+### 2. Floating Action Button (FAB)
+Tombol melayang yang terletak di pojok kanan bawah layar daftar catatan.
+- **Kode**: Implementasi di dalam `Scaffold` menggunakan `FloatingActionButton`.
+- **Fungsi**: Memicu navigasi ke `AddNoteScreen` menggunakan `navController.navigate()`. Tombol ini otomatis hanya muncul pada tab Notes.
 
-### 2. ViewModel (`ProfileViewModel`)
-Bertindak sebagai perantara yang mengelola logika dan aliran data:
-- Menggunakan **`StateFlow`** dari Kotlin Coroutines untuk memancarkan perubahan status secara reaktif.
-- Menyediakan fungsi-fungsi aksi seperti `toggleDarkMode()`, `setEditing()`, dan `updateProfile()`.
-- Menjamin data tetap konsisten meskipun terjadi perubahan konfigurasi.
+### 3. Back Navigation
+Implementasi navigasi mundur yang konsisten di seluruh layar detail dan form (Add & Edit).
+- **Kode**: Menggunakan `navController.popBackStack()`.
+- **Kegunaan**: Memastikan pengguna dapat kembali ke layar sebelumnya dengan menekan ikon panah kembali di TopAppBar tanpa merusak urutan tumpukan layar (*backstack*).
 
-### 3. View (Jetpack Compose UI)
-Layer tampilan yang hanya bertugas merender UI berdasarkan state dari ViewModel:
-- Menggunakan **`collectAsState()`** untuk mengamati perubahan data secara real-time.
-- Menerapkan komponen reusable seperti `ProfileHeader`, `ProfileCard`, dan `InfoItem`.
+### 4. Edit Notes (`EditNoteScreen`)
+Fitur untuk memperbarui catatan yang sudah ada.
+- **Implementasi**: Mengirimkan `noteId` sebagai argumen navigasi dari layar Detail ke layar Edit.
+- **Fungsi**: Memuat data lama ke dalam `TextField` melalui ViewModel, kemudian menjalankan fungsi `updateNote()` untuk menyimpan perubahan ke StateFlow.
 
 ---
 
-## Dokumentasi Visual
-
-| Light Mode | Dark Mode | Edit Mode |
-| :---: | :---: | :---: |
-| <img src="pict/lightmode.png" width="220"> | <img src="pict/darkmode.png" width="220"> | <img src="pict/editmode.png" width="220"> |
+## 📐 Arsitektur MVVM
+Aplikasi ini memisahkan antara UI (View) dan Logika Bisnis (ViewModel):
+- **Model**: `Note` data class yang mendefinisikan struktur data catatan.
+- **View**: Komponen Composable di `App.kt` yang mengamati status data.
+- **ViewModel**: `NoteViewModel` dan `ProfileViewModel` yang mengelola status aplikasi (UI State) dan menangani aksi pengguna.
 
 ---
 
-## Cara Menjalankan
+## 🖼️ Galeri Hasil Running
 
-1. **Persiapan Resource**: Pastikan file `Flowers.jpg` berada di folder `composeApp/src/commonMain/composeResources/drawable/`.
-2. **Sync Project**: Lakukan *Gradle Sync* di Android Studio.
-3. **Run**:
-   - Untuk Android: Pilih modul `composeApp` lalu klik **Run**.
-   - Untuk Desktop: Jalankan perintah `./gradlew :composeApp:run` di terminal.
+| List Catatan | Tambah Catatan | Favorit | Profil Pengguna |
+| :---: | :---: | :---: | :---: |
+| <img src="pict/list.png" width="200"> | <img src="pict/addlist.png" width="200"> | <img src="pict/favourites.png" width="200"> | <img src="pict/profile.png" width="200"> |
 
-**Disusun Oleh:** Miftahul Khoiriyah  
-**Jurusan:** Teknik Informatika - ITERA
+---
+
+**Disusun Oleh:**  
+**Nama:** Miftahul Khoiriyah  
+**Jurusan:** Teknik Informatika  
+**Instansi:** Institut Teknologi Sumatera (ITERA)
